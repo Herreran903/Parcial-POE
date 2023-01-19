@@ -1,16 +1,19 @@
 package controlador;
 import dao.HistoricoVentasDao;
 import modelo.VentaPeriodo;
+import vista.VistaPronostico;
 
 public class ControladorPronostico
 {
     private final HistoricoVentasDao historicoVentasDao;
     private final VistaPronostico vistaPronostico;
 
-    private ControladorPronostico(HistoricoVentasDao auxHistoricoVentasDao, VistaPronostico auxVistaPronostico)
+    public ControladorPronostico(HistoricoVentasDao auxHistoricoVentasDao, VistaPronostico auxVistaPronostico)
     {
         this.vistaPronostico = auxVistaPronostico;
         this.historicoVentasDao = auxHistoricoVentasDao;
+
+        vistaPronostico.pantallaCompleta();
     }
 
     private void agregarVentaHistorica()
