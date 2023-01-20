@@ -40,12 +40,12 @@ public class HistoricoVentasDao
         return true;
     }
 
-    public VentaPeriodo getVentaHistorica(int auxId)
+    public VentaPeriodo getVentaHistorica(int auxPeriodo)
     {
         VentaPeriodo auxVenta = null;
         for(VentaPeriodo ventaPeriodo: historicoVentas)
         {
-            if(ventaPeriodo.getId()== auxId)
+            if(ventaPeriodo.getPeriodo()== auxPeriodo)
             {
                 auxVenta = ventaPeriodo;
                 break;
