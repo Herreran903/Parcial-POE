@@ -12,7 +12,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -457,10 +456,12 @@ public class VistaPronostico extends javax.swing.JFrame {
             int fila = tabla.getSelectedRow();
             if(fila == -1)
             {
+                txtAño.setText("0");
                 txtCantidadVentas.setText("");
             }
             else
             {
+                txtAño.setText(String.valueOf(tabla.getValueAt(fila , 0)));
                 txtCantidadVentas.setText(String.valueOf(tabla.getValueAt(fila , 1)));
             }
 
@@ -473,12 +474,12 @@ public class VistaPronostico extends javax.swing.JFrame {
         return jtHistoricoVentas.getModel();
     }
 
-    public int getFilaSeleccionadaCliente()
+    public int getFilaSeleccionadaVentas()
     {
         return jtHistoricoVentas.getSelectedRow();
     }
 
-    public void deseleccionarFilaTablaCliente()
+    public void deseleccionarFilaTablaVentas()
     {
         jtHistoricoVentas.getSelectionModel().clearSelection();
     }

@@ -2,27 +2,19 @@ package modelo;
 
 public class VentaPeriodo
 {
-    private int numero;
-    private int id;
+    private static int numero;
     private int periodo;
     private double cantidadVentas;
+    private double variacionVentas;
+    private double porcentajeVariacionVenta;
 
-    public VentaPeriodo(int auxPeriodo, double auxCantidadVentas)
+    public VentaPeriodo(double auxCantidadVentas, double auxVariacionVentas, double auxPorcentajeVariacionVenta)
     {
         numero++;
-        this.id = numero;
-        this.periodo = auxPeriodo;
+        this.periodo = numero;
         this.cantidadVentas = auxCantidadVentas;
-    }
-
-    public int getId()
-    {
-        return id;
-    }
-
-    public void setId(int auxId)
-    {
-        this.id = auxId;
+        this.variacionVentas = auxVariacionVentas;
+        this.porcentajeVariacionVenta = auxPorcentajeVariacionVenta;
     }
 
     public int getPeriodo()
@@ -43,5 +35,25 @@ public class VentaPeriodo
     public void setCantidadVentas(double auxCantidadVentas)
     {
         this.cantidadVentas = auxCantidadVentas;
+    }
+
+    public double getVariacionVentas()
+    {
+        return variacionVentas;
+    }
+
+    public void setVariacionVentas(double auxVariacionVentas)
+    {
+        this.variacionVentas = auxVariacionVentas;
+    }
+
+    public double getPorcentajeVariacionVenta()
+    {
+        return porcentajeVariacionVenta;
+    }
+
+    public void setPorcentajeVariacionVenta(double auxPorcentajeVariacionVenta)
+    {
+        this.porcentajeVariacionVenta = auxPorcentajeVariacionVenta;
     }
 }
