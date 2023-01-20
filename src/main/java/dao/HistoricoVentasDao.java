@@ -20,6 +20,7 @@ public class HistoricoVentasDao
     public boolean anhadirVenta(VentaPeriodo auxVenta)
     {
         historicoVentas.add(auxVenta);
+        auxVenta.setPeriodo(historicoVentas.indexOf(auxVenta) + 1);
         return true;
     }
 

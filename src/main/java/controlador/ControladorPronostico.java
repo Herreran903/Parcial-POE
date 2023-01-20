@@ -8,8 +8,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
-import static modelo.VentaPeriodo.setNumero;
-
 public class ControladorPronostico
 {
     private final HistoricoVentasDao historicoVentasDao;
@@ -93,7 +91,6 @@ public class ControladorPronostico
     {
         VentaPeriodo auxVentaPeriodo;
         int auxAño;
-        int auxPeriodo;
         double auxCantidadVentas;
 
         auxAño = Integer.parseInt(vistaPronostico.getAño());
@@ -157,8 +154,6 @@ public class ControladorPronostico
     {
         VentaPeriodo auxVentaPeriodo;
         int auxAño;
-        int auxPeriodo;
-        double auxCantidadVentas;
 
         auxAño = Integer.parseInt(vistaPronostico.getAño());
         auxVentaPeriodo = historicoVentasDao.getVentaHistorica(auxAño);
@@ -169,21 +164,20 @@ public class ControladorPronostico
             {
                 if(historicoVentasDao.eliminarVenta(auxVentaPeriodo))
                 {
-                    recalcularAños(auxVentaPeriodo);
-                    listarBorrarVenta(auxVentaPeriodo);
+                    recalcularAños();
+                    listarBorrarVenta();
                     vistaPronostico.setCantidadVentas("");
                     vistaPronostico.setTotalVariacion("0");
                     vistaPronostico.deseleccionarFilaTablaVentas();
                     vistaPronostico.setAño("0");
-                    recalcularAños(auxVentaPeriodo);
                 }
             }
             else
             {
                 if(historicoVentasDao.eliminarVenta(auxVentaPeriodo))
                 {
-                    listarBorrarVenta(auxVentaPeriodo);
-                    recalcularAños(auxVentaPeriodo);
+                    listarBorrarVenta();
+                    recalcularAños();
                     calcularVariacionBorrar(auxVentaPeriodo);
                     vistaPronostico.setCantidadVentas("");
                     vistaPronostico.setTotalVariacion("" + calcularTotalPorcentajeVariacion());
@@ -317,11 +311,12 @@ public class ControladorPronostico
 
         if(historicoVentasDao.getHistorico().size() + 1 != auxVenta.getPeriodo() && auxVenta.getPeriodo() != 1)
         {
+            System.out.println("a");
             VentaPeriodo auxVentaAnterior = historicoVentasDao.getVentaHistorica(auxVenta.getPeriodo() - 1);
             VentaPeriodo auxVentaPosterior = historicoVentasDao.getVentaHistorica(auxVenta.getPeriodo());
 
             System.out.println(auxVentaPosterior.getCantidadVentas());
-            System.out.println(auxVentaPosterior.getCantidadVentas() - auxVentaAnterior.getCantidadVentas());
+            System.out.println(auxVentaAnterior.getCantidadVentas());
             auxVariacion = auxVentaPosterior.getCantidadVentas() - auxVentaAnterior.getCantidadVentas();
             auxVentaPosterior.setVariacionVentas(auxVariacion);
 
@@ -336,7 +331,7 @@ public class ControladorPronostico
                 auxVentaPosterior.setPorcentajeVariacionVenta(auxVariacionPorcentaje);
             }
 
-            listarModificarVenta(auxVentaPosterior, 1);
+            listarModificarVenta(auxVentaPosterior, auxVentaPosterior.getPeriodo()-1);
         }
         else if(auxVenta.getPeriodo() == 1)
         {
@@ -347,45 +342,15 @@ public class ControladorPronostico
         }
     }
 
-    public void recalcularAños(VentaPeriodo auxVenta)
+    public void recalcularAños()
     {
-        VentaPeriodo auxVentaPeriodo;
-        int auxI = auxVenta.getPeriodo();
-        for(int i = auxI ; i < historicoVentasDao.getHistorico().size() + 1; i++)
+        ArrayList<VentaPeriodo> auxHistorico;
+        auxHistorico = historicoVentasDao.getHistorico();
+        for(VentaPeriodo ventaPeriodo : auxHistorico)
         {
-            System.out.println("a");
-            auxVentaPeriodo = historicoVentasDao.getVentaHistorica(i+1);
-            System.out.println(auxVentaPeriodo.getPeriodo());
-            auxVentaPeriodo.setPeriodo(i);
-            System.out.println(auxVentaPeriodo.getPeriodo());
-            listarModificarVenta(auxVentaPeriodo, i-1);
-            if(i == 1)
-            {
-                setNumero(0);
-            }
-            else
-            {
-                setNumero(i);
-            }
-
+            ventaPeriodo.setPeriodo(auxHistorico.indexOf(ventaPeriodo) + 1);
+            listarModificarVenta(ventaPeriodo, auxHistorico.indexOf(ventaPeriodo));
         }
-    }
-
-    private double calcularPorcentajeVariacion(VentaPeriodo auxVenta)
-    {
-        VentaPeriodo auxVentaAnterior = historicoVentasDao.getVentaHistorica(auxVenta.getPeriodo()-1);
-        double variacionPorcentajeVenta;
-
-        if (auxVentaAnterior.getCantidadVentas()!=0)
-        {
-             variacionPorcentajeVenta = (auxVenta.getCantidadVentas() - auxVentaAnterior.getCantidadVentas())/auxVentaAnterior.getCantidadVentas();
-        }
-        else
-        {
-            variacionPorcentajeVenta = 0;
-        }
-
-        return variacionPorcentajeVenta;
     }
 
     private double calcularTotalPorcentajeVariacion()
@@ -420,11 +385,91 @@ public class ControladorPronostico
         modelo.setValueAt(porcentajeVariacion, auxFila, 3);
     }
 
-    private void listarBorrarVenta(VentaPeriodo auxVenta)
+    private void listarBorrarVenta()
     {
         DefaultTableModel modelo = (DefaultTableModel) vistaPronostico.getTableModelHistoricoVentas();
         int auxFila = vistaPronostico.getFilaSeleccionadaVentas();
         modelo.removeRow(auxFila);
+    }
+
+    public void generarPronostico()
+    {
+        int auxCantidadAnhos;
+        if(comprobarCampoNumeroPronostico())
+        {
+            try
+            {
+                auxCantidadAnhos = Integer.parseInt(vistaPronostico.getCantidadAños());
+                if(auxCantidadAnhos>1)
+                {
+                    if(historicoVentasDao.getHistorico().size() >2)
+                    {
+                        PronosticoEliminarAll();
+                        calcularPronostico(auxCantidadAnhos);
+                        listarPronostico();
+                        pronosticoDao.limpiarPronostico();
+                    }
+                    else
+                    {
+                        vistaPronostico.mostrarMensajeError("Necesita minimo 3 datos de Ventas historicas para generar un pronostico");
+                    }
+                }
+                else
+                {
+                    vistaPronostico.mostrarMensajeError("Ingrese un valor de años a pronosticar mayor o igual a 2");
+                }
+
+            }
+            catch (NumberFormatException ex)
+            {
+                vistaPronostico.mostrarMensajeError("Digite correctamente los años a pronosticar");
+            }
+
+        }
+        else
+        {
+            vistaPronostico.mostrarMensajeError("Rellene el campo de años a pronosticar");
+        }
+    }
+
+    public void calcularPronostico(int cantidadAnhos)
+    {
+        ArrayList<VentaPeriodo> historial = historicoVentasDao.getHistorico();
+        double promedioTotal = Double.parseDouble(vistaPronostico.getPorcentajeVarTotal())/(historial.size()-1);
+        vistaPronostico.setPromedioVariacion("" + promedioTotal);
+        VentaPeriodo auxVentaPronostico;
+        double auxCantidadVentas = historicoVentasDao.getVentaHistorica(historial.size()).getCantidadVentas();
+        for(int i = historial.size()+1; i <= historial.size() + cantidadAnhos; i++)
+        {
+            auxCantidadVentas = auxCantidadVentas + (auxCantidadVentas * promedioTotal);
+            auxVentaPronostico = new VentaPeriodo(auxCantidadVentas);
+            auxVentaPronostico.setPeriodo(i);
+            pronosticoDao.anhadirPronostico(auxVentaPronostico);
+        }
+    }
+
+    public void listarPronostico()
+    {
+        DefaultTableModel modelo = (DefaultTableModel) vistaPronostico.getTableModelPronostico();
+        VentaPeriodo auxVentaPeriodo;
+        for(int i = 0; i < pronosticoDao.getArrayPronostico().size(); i++)
+        {
+            auxVentaPeriodo = pronosticoDao.getArrayPronostico().get(i);
+            modelo.addRow(new Object[]{auxVentaPeriodo.getPeriodo(), auxVentaPeriodo.getCantidadVentas()});
+        }
+    }
+
+    public boolean comprobarCampoNumeroPronostico()
+    {
+        boolean campoValido;
+        campoValido = !vistaPronostico.getCantidadAños().equals("");
+        return  campoValido;
+    }
+
+    private void PronosticoEliminarAll()
+    {
+        DefaultTableModel auxModeloTabla = (DefaultTableModel) vistaPronostico.getTableModelPronostico();
+        auxModeloTabla.setRowCount(0);
     }
 
     class PronosticoListener implements ActionListener
@@ -446,7 +491,7 @@ public class ControladorPronostico
             }
             if(e.getActionCommand().equalsIgnoreCase("NUEVO PRONOSTICO"))
             {
-
+                generarPronostico();
             }
         }
     }
