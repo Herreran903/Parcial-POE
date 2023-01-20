@@ -17,4 +17,15 @@ public class PronosticoDao
     {
         return ventasPronostico;
     }
+
+    public boolean anhadirPronostico(VentaPeriodo auxVenta)
+    {
+        ventasPronostico.add(auxVenta);
+        return true;
+    }
+
+    public void limpiarPronostico()
+    {
+        ventasPronostico.clear();
+    }
 }

@@ -17,6 +17,11 @@ public class VentaPeriodo
         this.porcentajeVariacionVenta = auxPorcentajeVariacionVenta;
     }
 
+    public VentaPeriodo(double auxCantidadVentas)
+    {
+        this.cantidadVentas = auxCantidadVentas;
+    }
+
     public int getPeriodo()
     {
         return periodo;

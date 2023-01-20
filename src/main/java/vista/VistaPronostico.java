@@ -484,6 +484,11 @@ public class VistaPronostico extends javax.swing.JFrame {
         jtHistoricoVentas.getSelectionModel().clearSelection();
     }
 
+    public TableModel getTableModelPronostico()
+    {
+        return jtPronosticoVenta.getModel();
+    }
+
     //==========|Gets|==========//
     public String getCantidadVentas()
     {
@@ -498,6 +503,16 @@ public class VistaPronostico extends javax.swing.JFrame {
     public String getAño()
     {
         return txtAño.getText();
+    }
+
+    public String getPorcentajeVarTotal()
+    {
+        return txtTotalVariacion.getText();
+    }
+
+    public String getPromedioVariacion()
+    {
+        return txtPromedioVariacion.getText();
     }
 
     //==========|Sets|==========//
