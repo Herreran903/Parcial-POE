@@ -14,10 +14,11 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.TableModel;
 
-/**
- *
- * @author Nicolas Herrera
+/*
+ * @author Nicolas Herrera <herrera.nicolas@correounivalle.edu.co>
+ * @author Samuel Galindo Cuevas <samuel.galindo@correounivalle.edu.co>
  */
+
 public class VistaPronostico extends javax.swing.JFrame {
 
     /**

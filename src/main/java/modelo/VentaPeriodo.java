@@ -1,8 +1,12 @@
 package modelo;
 
+/*
+ * @author Nicolas Herrera <herrera.nicolas@correounivalle.edu.co>
+ * @author Samuel Galindo Cuevas <samuel.galindo@correounivalle.edu.co>
+ */
+
 public class VentaPeriodo
 {
-    private static int numero;
     private int periodo;
     private double cantidadVentas;
     private double variacionVentas;
@@ -10,8 +14,7 @@ public class VentaPeriodo
 
     public VentaPeriodo(double auxCantidadVentas, double auxVariacionVentas, double auxPorcentajeVariacionVenta)
     {
-        numero++;
-        this.periodo = numero;
+        this.periodo = 0;
         this.cantidadVentas = auxCantidadVentas;
         this.variacionVentas = auxVariacionVentas;
         this.porcentajeVariacionVenta = auxPorcentajeVariacionVenta;
@@ -61,4 +64,5 @@ public class VentaPeriodo
     {
         this.porcentajeVariacionVenta = auxPorcentajeVariacionVenta;
     }
+
 }

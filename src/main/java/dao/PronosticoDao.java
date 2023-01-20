@@ -4,21 +4,26 @@ import modelo.VentaPeriodo;
 
 import java.util.ArrayList;
 
+/*
+ * @author Nicolas Herrera <herrera.nicolas@correounivalle.edu.co>
+ * @author Samuel Galindo Cuevas <samuel.galindo@correounivalle.edu.co>
+ */
+
 public class PronosticoDao
 {
-    private ArrayList<VentaPeriodo> ventasPronostico;
+    private final ArrayList<VentaPeriodo> ventasPronostico;
 
     public PronosticoDao()
     {
         this.ventasPronostico = new ArrayList<VentaPeriodo>();
     }
 
-    public ArrayList<VentaPeriodo> getArrayPronostico()
+    public ArrayList<VentaPeriodo> getPronostico()
     {
         return ventasPronostico;
     }
 
-    public boolean anhadirPronostico(VentaPeriodo auxVenta)
+    public boolean agregarPronostico(VentaPeriodo auxVenta)
     {
         ventasPronostico.add(auxVenta);
         return true;
