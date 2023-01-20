@@ -170,7 +170,7 @@ public class ControladorPronostico
         {
             if(historicoDao.getHistorico().size() == 1)
             {
-                if(historicoDao.eliminarPronostico(auxVentaPeriodo))
+                if(historicoDao.eliminarHistorico(auxVentaPeriodo))
                 {
                     recalcularAños();
                     listarBorrarVenta();
@@ -182,7 +182,7 @@ public class ControladorPronostico
             }
             else
             {
-                if(historicoDao.eliminarPronostico(auxVentaPeriodo))
+                if(historicoDao.eliminarHistorico(auxVentaPeriodo))
                 {
                     listarBorrarVenta();
                     recalcularAños();
@@ -400,7 +400,7 @@ public class ControladorPronostico
         modelo.removeRow(auxFila);
     }
 
-    public void generarPronostico()
+    private void generarPronostico()
     {
         int auxCantidadAnhos;
         if(comprobarCampoNumeroPronostico())
@@ -412,7 +412,7 @@ public class ControladorPronostico
                 {
                     if(historicoDao.getHistorico().size() >2)
                     {
-                        PronosticoEliminarAll();
+                        pronosticoEliminarAll();
                         calcularPronostico(auxCantidadAnhos);
                         listarPronostico();
                         pronosticoDao.limpiarPronostico();
@@ -474,7 +474,7 @@ public class ControladorPronostico
         return  campoValido;
     }
 
-    private void PronosticoEliminarAll()
+    private void pronosticoEliminarAll()
     {
         DefaultTableModel auxModeloTabla = (DefaultTableModel) vistaPronostico.getTableModelPronostico();
         auxModeloTabla.setRowCount(0);

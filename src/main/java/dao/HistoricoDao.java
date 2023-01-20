@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class HistoricoDao
 {
-    private ArrayList<VentaPeriodo> ventasHistorico;
+    private final ArrayList<VentaPeriodo> ventasHistorico;
 
     public HistoricoDao()
     {
@@ -40,7 +40,7 @@ public class HistoricoDao
         return false;
     }
 
-    public boolean eliminarPronostico(VentaPeriodo auxVenta)
+    public boolean eliminarHistorico(VentaPeriodo auxVenta)
     {
         ventasHistorico.remove(auxVenta);
         return true;
