@@ -53,10 +53,4 @@ public class HistoricoVentasDao
         }
         return auxVenta;
     }
-
-    public boolean eliminarHistorico()
-    {
-        historicoVentas.clear();
-        return true;
-    }
 }
