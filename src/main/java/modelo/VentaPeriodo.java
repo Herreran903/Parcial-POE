@@ -56,4 +56,14 @@ public class VentaPeriodo
     {
         this.porcentajeVariacionVenta = auxPorcentajeVariacionVenta;
     }
+
+    public static int getNumero()
+    {
+        return numero;
+    }
+
+    public static void setNumero(int numero)
+    {
+        VentaPeriodo.numero = numero;
+    }
 }
