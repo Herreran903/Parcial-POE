@@ -9,5 +9,3 @@ en promedio por año, basado en los resultados de las ventas de los últimos m a
 
 - [@Herreran903](https://github.com/Herreran903)
 - [@SakyJoestar](https://www.github.com/SakyJoestar)
-- [@JulianRC1](https://github.com/JulianRC1)
-
