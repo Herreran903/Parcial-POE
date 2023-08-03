@@ -1,5 +1,5 @@
 
-# Parcial No. 1
+# Parcial-POE
 
 Una compañía de ventas requiere un algoritmo que le permita calcular el pronóstico de ventas para
 cada uno de los siguientes n años que se determinen (como mínimo 2), así mismo del crecimiento
